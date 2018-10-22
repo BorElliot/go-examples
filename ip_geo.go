@@ -9,7 +9,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"net"
 	"net/http"
+	"os"
 )
 
 type GeoIP struct {
@@ -46,6 +49,16 @@ var (
 )
 
 func main() {
+
+	if len(os.Args) > 1 {
+		address = os.Args[1]
+	} else {
+		log.Fatal("please input IP address")
+	}
+
+	if nil == net.ParseIP(address) {
+		log.Fatal("The ip address is not correct")
+	}
 
 	response, err = http.Get("https://ipstack.com/ipstack_api.php?ip=" + address)
 	if err != nil {
