@@ -20,8 +20,9 @@ type GeoIP struct {
 	Latitude      float32 `json:"latitude"`
 	Longitude     float32 `json:"longitude"`
 	Location      struct {
-		Capital   string `json:"capital"`
-		Languages []struct {
+		Capital          string `json:"capital"`
+		CountryFlagEmoji string `json:"country_flag_emoji"`
+		Languages        []struct {
 			Code   string `json:"code"`
 			Name   string `json:"name"`
 			Native string `json:"native"`
@@ -77,6 +78,7 @@ func main() {
 
 	fmt.Println("\n==== Location Info ====")
 	fmt.Println("Location Capital:\t", geo.Location.Capital)
+	fmt.Println("Location Country Flag emoji:\t", geo.Location.CountryFlagEmoji)
 
 	for _, v := range geo.Location.Languages {
 		fmt.Println("Location language name:\t", v.Name)
