@@ -1,3 +1,8 @@
+/*
+* References
+* 1. https://medium.com/@xcoulon/nested-structs-in-golang-2c750403a007
+* 2. https://www.devdungeon.com/content/ip-geolocation-go
+ */
 package main
 
 import (
@@ -14,6 +19,16 @@ type GeoIP struct {
 	RegionName    string  `json:"region_name"`
 	Latitude      float32 `json:"latitude"`
 	Longitude     float32 `json:"longitude"`
+	Location      struct {
+		Capital string `json:"capital"`
+	} `json:"location"`
+	TimeZone struct {
+		ID               string `json:"id"`
+		CurrentTime      string `json:"current_time"`
+		GmtOffset        int32  `json:"gmt_offset"`
+		Code             string `json:"code"`
+		IsDaylightSaving bool   `json:"is_daylight_saving"`
+	} `json:"time_zone"`
 }
 
 var (
@@ -46,11 +61,17 @@ func main() {
 		fmt.Println(err)
 	}
 
-	fmt.Println("\n===== IP Geolocation Info ====\n")
+	fmt.Println("\n===== IP Geolocation Info ====")
 	fmt.Println("IP address:\t", geo.IP)
 	fmt.Println("Continent name:\t", geo.ContinentName)
 	fmt.Println("Country name:\t", geo.CountryName)
 	fmt.Println("Region name:\t", geo.RegionName)
 	fmt.Println("Latitude:\t", geo.Latitude)
 	fmt.Println("Longitude:\t", geo.Longitude)
+	fmt.Println("Capital:\t", geo.Location.Capital)
+
+	fmt.Println("\n==== TimeZone Info ====")
+	fmt.Println("ID:\t", geo.TimeZone.ID)
+	fmt.Println("CurrentTime:\t", geo.TimeZone.CurrentTime)
+	fmt.Println("Is daylight saving:\t", geo.TimeZone.IsDaylightSaving)
 }
